@@ -1,0 +1,26 @@
+{
+  "name": "around-express",
+  "version": "1.0.0",
+  "description": "`/data` — JSON files to temporarily emulate database integration.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trisboyd/around-express.git"
+  },
+  "author": "Tristan Boyd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trisboyd/around-express/issues"
+  },
+  "homepage": "https://github.com/Trisboyd/around-express#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
