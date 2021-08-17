@@ -1,7 +1,6 @@
 const router = require('express').Router();
-const getDataFromFile = require('../helpers/files');
+const getCards = require('../controllers/cards.js');
 
+router.get('/cards', getCards);
 
-router.get('/cards', (req, res) => {
-  res.send(cards);
-});
+module.exports = router;
