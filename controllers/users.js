@@ -2,6 +2,7 @@ const getDataFromFile = require('../helpers/files');
 const path = require('path');
 const dataPath = path.join(__dirname, '..', 'data', 'users.json');
 
+// function for sending all users to requestee
 const getUsers = (req, res) => {
   getDataFromFile(dataPath)
     .then(users =>
@@ -9,6 +10,8 @@ const getUsers = (req, res) => {
     .catch(err => res.status(400).send(err))
 }
 
+
+// function for sending specific user specified in url to requestee
 const getProfile = (req, res) => {
   getDataFromFile(dataPath)
     .then(users => {
