@@ -7,7 +7,7 @@ const getCards = (req, res) => {
   getDataFromFile(dataPath)
     .then(cards =>
       res.status(200).send(cards))
-    .catch(err => { status(400).send(err) })
+    .catch(err => { status(500).send(err) })
 }
 
 module.exports = getCards;

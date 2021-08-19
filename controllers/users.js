@@ -7,7 +7,7 @@ const getUsers = (req, res) => {
   getDataFromFile(dataPath)
     .then(users =>
       res.status(200).send(users))
-    .catch(err => res.status(400).send(err))
+    .catch(err => res.status(500).send(err))
 }
 
 
@@ -22,9 +22,9 @@ const getProfile = (req, res) => {
       if (user) {
         return res.status(200).send(user);
       }
-      return res.status(404).send({ message: "User ID not found" })
+      return res.status(500).send({ message: "User ID not found" })
     })
-    .catch(err => { res.send(err) })
+    .catch(err => { res.status(500).send(err) })
 }
 
 module.exports = { getUsers, getProfile };
