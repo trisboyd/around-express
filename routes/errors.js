@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const errorMessage = require('../controllers/errors.js');
+const errorMessage = require('../controllers/errors');
 
 router.get('*', errorMessage);
 
