@@ -9,11 +9,12 @@ module.exports.getCards = (req, res) => {
 
 // function for creating cards
 module.exports.createCard = (req, res) => {
+  console.log(req.user._id);
   const {
-    name, owner, likes, link, createdAt,
+    name, link,
   } = req.body;
   card.create({
-    name, owner, likes, link, createdAt,
+    name, link,
   })
     .then((cards) => res.send({ data: cards }))
     .catch(() => res.status(500).send({ message: 'Error' }));
@@ -21,10 +22,7 @@ module.exports.createCard = (req, res) => {
 
 // function for deleting a card
 module.exports.deleteCard = (req, res) => {
-  const {
-    id,
-  } = req.user;
-  card.findByIdAndRemove(id)
+  card.findByIdAndRemove(req.params.id)
     .then((cards) => res.send({ data: cards }))
     .catch(() => res.status(500).send({ message: 'Error' }));
 };
