@@ -25,6 +25,24 @@ module.exports.createUser = (req, res) => {
     .catch((error) => checkError(error, res));
 };
 
+module.exports.updateProfile = (req, res) => {
+  const {
+    name, about,
+  } = req.body;
+  user.findByIdAndUpdate(req.user._id, { name, about })
+    .then(res.send({ data: user }))
+    .catch((error) => checkError(error, res));
+};
+
+module.exports.updateAvatar = (req, res) => {
+  const {
+    avatar,
+  } = req.body;
+  user.findByIdAndUpdate(req.user._id, { avatar })
+    .then(res.send({ data: user }))
+    .catch((error) => checkError(error, res));
+};
+
 // OLD CODE_______________________________________________________________________________
 // const path = require('path');
 // const getDataFromFile = require('../helpers/files');

@@ -28,6 +28,22 @@ module.exports.deleteCard = (req, res) => {
     .catch((error) => checkError(error, res));
 };
 
+module.exports.likeCard = (req, res) => {
+  card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
+    { new: true },
+  );
+};
+
+module.exports.dislikeCard = (req, res) => {
+  card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: req.user._id } }, // remove _id from the array
+    { new: true },
+  );
+};
+
 // OLD CODE FROM LAST PROJECT______________________________
 
 // const path = require('path');
