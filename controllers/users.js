@@ -1,16 +1,17 @@
 const user = require('../models/user');
+const checkError = require('./constants');
 
 // function for getting user from database
 module.exports.getUser = (req, res) => {
   user.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => res.status(500).send({ message: 'Error' }));
+    .catch((error) => checkError(error, res));
 };
 
 module.exports.getProfile = (req, res) => {
   user.findById(req.params.id)
     .then((userProfile) => res.send({ data: userProfile }))
-    .catch(() => res.status(500).send('User cannot be found'));
+    .catch((error) => checkError(error, res));
 };
 
 module.exports.createUser = (req, res) => {
@@ -21,9 +22,10 @@ module.exports.createUser = (req, res) => {
     name, about, avatar,
   })
     .then((newUser) => res.send({ data: newUser }))
-    .catch(() => res.status(500).send({ message: 'Error' }));
+    .catch((error) => checkError(error, res));
 };
 
+// OLD CODE_______________________________________________________________________________
 // const path = require('path');
 // const getDataFromFile = require('../helpers/files');
 
