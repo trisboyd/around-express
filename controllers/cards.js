@@ -1,5 +1,5 @@
 const card = require('../models/card');
-const checkError = require('./constants');
+const { checkError } = require('./constants');
 
 // function for getting cards from database
 module.exports.getCards = (req, res) => {
