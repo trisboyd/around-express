@@ -1,5 +1,5 @@
 const user = require('../models/user');
-const { checkError } = require('./constants');
+const { checkError } = require('./checkError');
 
 // function for getting user from database
 module.exports.getUser = (req, res) => {
@@ -9,7 +9,7 @@ module.exports.getUser = (req, res) => {
 };
 
 module.exports.getProfile = (req, res) => {
-  user.findById(req.params.id)
+  user.findById(req.params.id).orFail(() => { res.status(404).send({ message: 'User does not exist' }); })
     .then((userProfile) => res.send({ data: userProfile }))
     .catch((error) => checkError(error, res));
 };
@@ -33,7 +33,7 @@ module.exports.updateProfile = (req, res) => {
     {
       new: true,
       runValidators: true,
-    })
+    }.orFail(() => { res.status(404).send({ message: 'User does not exist' }); }))
     .then(res.send({ data: user }))
     .catch((error) => checkError(error, res));
 };
@@ -42,7 +42,7 @@ module.exports.updateAvatar = (req, res) => {
   const {
     avatar,
   } = req.body;
-  user.findByIdAndUpdate(req.user._id, { avatar },
+  user.findByIdAndUpdate(req.user._id, { avatar }.orFail(() => { res.status(404).send({ message: 'User does not exist' }); }),
     {
       new: true,
       runValidators: true,
