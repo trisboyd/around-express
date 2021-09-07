@@ -15,7 +15,7 @@ module.exports.createCard = (req, res) => {
     name, link,
   } = req.body;
   card.create({
-    name, link,
+    name, link, owner: req.user._id,
   })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => checkError(error, res));
@@ -33,7 +33,9 @@ module.exports.likeCard = (req, res) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
     { new: true },
-  ).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); });
+  ).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
+    .then((cardData) => res.send({ data: cardData }))
+    .catch((error) => checkError(error, res));
 };
 
 module.exports.dislikeCard = (req, res) => {
@@ -41,5 +43,7 @@ module.exports.dislikeCard = (req, res) => {
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // remove _id from the array
     { new: true },
-  ).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); });
+  ).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
+    .then((cardData) => res.send({ data: cardData }))
+    .catch((error) => checkError(error, res));
 };

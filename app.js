@@ -21,6 +21,14 @@ app.use(express.json());
 
 app.use(express.urlencoded());
 
+app.use((req, res, next) => {
+  req.user = {
+    _id: '61310d4d84185bd11146403e',
+  };
+
+  next();
+});
+
 app.use(usersRouter);
 
 app.use(cardsRouter);
