@@ -10,7 +10,7 @@ module.exports.getCards = (req, res) => {
 
 // function for creating cards
 module.exports.createCard = (req, res) => {
-  console.log(req.user._id);
+  console.log(req.params.id);
   const {
     name, link,
   } = req.body;
@@ -33,7 +33,8 @@ module.exports.likeCard = (req, res) => {
     req.params.cardId,
     { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
     { new: true },
-  ).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
+  )
+    .orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
     .then((cardData) => res.send({ data: cardData }))
     .catch((error) => checkError(error, res));
 };

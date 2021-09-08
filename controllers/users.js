@@ -33,16 +33,16 @@ module.exports.updateProfile = (req, res) => {
     {
       new: true,
       runValidators: true,
-    }.orFail(() => { res.status(404).send({ message: 'User does not exist' }); }))
-    .then(res.send({ data: user }))
-    .catch((error) => checkError(error, res));
+    }
+      .then(res.send({ data: user }))
+      .catch((error) => checkError(error, res)));
 };
 
 module.exports.updateAvatar = (req, res) => {
   const {
     avatar,
   } = req.body;
-  user.findByIdAndUpdate(req.user._id, { avatar }.orFail(() => { res.status(404).send({ message: 'User does not exist' }); }),
+  user.findByIdAndUpdate(req.user._id, { avatar },
     {
       new: true,
       runValidators: true,
