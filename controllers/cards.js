@@ -23,7 +23,7 @@ module.exports.createCard = (req, res) => {
 
 // function for deleting a card
 module.exports.deleteCard = (req, res) => {
-  card.findByIdAndRemove(req.user._id).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
+  card.findByIdAndRemove(req.params.cardId).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => checkError(error, res));
 };
@@ -44,7 +44,8 @@ module.exports.dislikeCard = (req, res) => {
     req.params.cardId,
     { $pull: { likes: req.user._id } }, // remove _id from the array
     { new: true },
-  ).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
+  )
+    .orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
     .then((cardData) => res.send({ data: cardData }))
     .catch((error) => checkError(error, res));
 };
