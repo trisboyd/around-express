@@ -23,7 +23,8 @@ module.exports.createCard = (req, res) => {
 
 // function for deleting a card
 module.exports.deleteCard = (req, res) => {
-  card.findByIdAndRemove(req.params.cardId).orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
+  card.findByIdAndRemove(req.params.cardId)
+    .orFail(() => { res.status(404).send({ message: 'Card does not exist' }); })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => checkError(error, res));
 };

@@ -9,8 +9,14 @@ module.exports.getUser = (req, res) => {
 };
 
 module.exports.getProfile = (req, res) => {
-  user.findById(req.params.id).orFail(() => { res.status(404).send({ message: 'User does not exist' }); })
-    .then((userProfile) => res.send({ data: userProfile }))
+  user.findById(req.params.id)
+    .then((userProfile) => {
+      if (!userProfile) {
+        res.status(404).send({ message: 'User does not exist' });
+      } else {
+        res.send({ data: userProfile });
+      }
+    })
     .catch((error) => checkError(error, res));
 };
 
@@ -26,27 +32,33 @@ module.exports.createUser = (req, res) => {
 };
 
 module.exports.updateProfile = (req, res) => {
-  const {
-    name, about,
-  } = req.body;
-  user.findByIdAndUpdate(req.user._id, { name, about },
-    {
-      new: true,
-      runValidators: true,
-    }
-      .then(res.send({ data: user }))
-      .catch((error) => checkError(error, res)));
+  const { name, about } = req.body;
+  user.findByIdAndUpdate(req.user._id,
+    { name, about },
+    { new: true, runValidators: true })
+    .then((userProfile) => {
+      if (!userProfile) {
+        res.status(404).send({ message: 'User does not exist' });
+      } else {
+        res.send({ data: userProfile });
+      }
+    })
+    .catch((error) => checkError(error, res));
 };
 
 module.exports.updateAvatar = (req, res) => {
-  const {
-    avatar,
-  } = req.body;
+  const { avatar } = req.body;
   user.findByIdAndUpdate(req.user._id, { avatar },
     {
       new: true,
       runValidators: true,
     })
-    .then(res.send({ data: user }))
+    .then((userProfile) => {
+      if (!userProfile) {
+        res.status(404).send({ message: 'User does not exist' });
+      } else {
+        res.send({ data: userProfile });
+      }
+    })
     .catch((error) => checkError(error, res));
 };
